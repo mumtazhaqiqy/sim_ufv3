@@ -186,6 +186,17 @@ if(!function_exists('db_get_count_ul')) {
 	}
 }
 
+if(!function_exists('db_get_count')) {
+	function db_get_count($table_name = null, $where = false) {
+		$ci =& get_instance();
+		if ($where) {
+			$ci->db->where($where);
+		}
+	  	$query = $ci->db->count_all_results($table_name);
+	    return $query;
+	}
+}
+
 if(!function_exists('db_count_update')) {
   function db_count_update($numeric)
   {
