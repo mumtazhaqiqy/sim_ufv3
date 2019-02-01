@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller']   = 'myigniter/dashboard';
+$route['default_controller']   = 'myigniter/profile';
 $route['404_override']         = 'myigniter/page_404';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -65,7 +65,7 @@ $route['register']               = 'myigniter/register';
 $route['forgot-password']        = 'myigniter/forgot_password';
 $route['reset-password/(:any)']  = 'myigniter/reset_password/$1';
 
-$route['ummidaerah/guru_quran/edit/(:any)/(:any)'] = 'ummidaerah/guru_quran/index/edit/$1'; 
+$route['ummidaerah/guru_quran/edit/(:any)/(:any)'] = 'ummidaerah/guru_quran/index/edit/$1';
 
 // $route['ummidaerah/trainer/(:any)/(:any)'] = 'trainer/$1/$2';
 // $route['ummidaerah/trainer/(:any)'] = 'trainer/$1';

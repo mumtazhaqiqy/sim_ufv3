@@ -12,22 +12,25 @@ class Ummidaerah extends MY_Controller
 
         $state = $crud->getState();
 
-        if ($state == 'list' || $state == 'ajax_list' || $state == 'ajax_list_info'|| $state == 'export') {
+        if ($state == 'list' || $state == 'ajax_list' || $state == 'ajax_list_info'|| $state == 'export' || $state == 'success') {
             if (!$this->ion_auth->in_group(array('admin','admin_data'))) {
                 redirect('myigniter/profile');
             }
+            $crud->set_table("view_ummi_daerah");
+        } else {
+          $crud->set_table("ummi_daerah");
         }
 
-        $crud->set_table("ummi_daerah");
+
         $crud->set_subject("Ummi Daerah");
 
         // Show in
         $crud->add_fields(["sk_umda", "ummi_daerah", "alamat_lengkap", "provinsi_id", "kabupaten_id", "kecamatan", "nomor_telp", "email", "ketua_umda", "hp_ketua_umda", "manager_buku", "hp_manager_buku", "admin", "hp_admin", "status_aktif"]);
         $crud->edit_fields(["sk_umda", "ummi_daerah", "alamat_lengkap", "provinsi_id", "kabupaten_id", "kecamatan", "nomor_telp", "email", "ketua_umda", "hp_ketua_umda", "manager_buku", "hp_manager_buku", "admin", "hp_admin", "status_aktif"]);
-        $crud->columns(["ummi_daerah"]);
+        $crud->columns(["ummi_daerah_id"]);
 
 
-        $crud->callback_column('ummi_daerah', array($this,'_callback_ummi_daerah_column'));
+        // $crud->callback_column('ummi_daerah', array($this,'_callback_ummi_daerah_column'));
 
         // Fields type
         $crud->field_type("id_ummi_daerah", "integer");

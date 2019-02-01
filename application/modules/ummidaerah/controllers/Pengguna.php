@@ -138,7 +138,7 @@ class Pengguna extends MY_Controller
         $crud->set_rules("kabupaten_id", "Kabupaten id", "required");
         $crud->set_rules("kecamatan", "Kecamatan", "required");
         $crud->set_rules("nomor_telp", "Nomor telp", "required");
-        $crud->set_rules("email", "Email", "valid_email");
+        $crud->set_rules("email", "Email", "required");
         $crud->set_rules("tanggal_mulai", "Tanggal mulai", "required");
         $crud->set_rules("perpekan", "Perpekan", "required");
         $crud->set_rules("perhari", "Perhari", "required");

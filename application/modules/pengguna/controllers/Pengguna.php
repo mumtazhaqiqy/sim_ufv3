@@ -42,7 +42,7 @@ class Pengguna extends MY_Controller
           'additional' => '['.json_encode($additional_data).']',
           'full_name' => $pengguna->nama
         );
-        
+
         $this->db->where('email',$email);
         $this->db->update('users',$update_data);
 
@@ -135,7 +135,7 @@ class Pengguna extends MY_Controller
 		$crud->set_rules("kabupaten_id", "Kabupaten id", "required");
 		$crud->set_rules("kecamatan", "Kecamatan", "required");
 		$crud->set_rules("nomor_telp", "Nomor telp", "required");
-		$crud->set_rules("email", "Email", "valid_email");
+		$crud->set_rules("email", "Email", "required");
 		$crud->set_rules("tanggal_mulai", "Tanggal mulai", "required");
 		$crud->set_rules("kepala_lembaga", "Kepala lembaga", "required");
 		$crud->set_rules("koordinator", "Koordinator", "required");

@@ -200,7 +200,8 @@ if(!function_exists('db_get_count')) {
 if(!function_exists('db_count_update')) {
   function db_count_update($numeric)
   {
-    $result = $this->db->query('SELECT COUNT(*) AS res
+    $ci =& get_instance();
+    $result = $ci->db->query('SELECT COUNT(*) AS res
         FROM
         (SELECT ua.ummi_daerah_id, ks.last_update_time
         FROM kondisi_siswa AS ks

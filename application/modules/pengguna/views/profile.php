@@ -43,7 +43,7 @@
                     </div>
                 </li>
             </ul>
-            <a href="<?=base_url()?>ummidaerah/pengguna/index/edit/<?= $profile_pengguna->id_customer?>" class="btn btn-block bg-green-light text-white" data-original-title="" title=""><b>Edit Data</b></a>
+            <a href="<?=base_url()?>pengguna/crud/edit/<?= $profile_pengguna->id_customer?>" class="btn btn-block bg-green-light text-white" data-original-title="" title=""><b>Edit Data</b></a>
         </div>
     </div>
 
