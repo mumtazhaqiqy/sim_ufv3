@@ -13,11 +13,12 @@ class MY_Controller extends MX_Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->config->load('myigniter');
         $this->load->library('layout');
         $this->load->library('ion_auth');
         $this->load->library('message');
+        $this->load->library('mobile_detect');
         $this->load->helper('utility');
 
         $this->layout->sess_language();
