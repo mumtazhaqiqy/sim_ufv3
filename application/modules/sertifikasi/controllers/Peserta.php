@@ -25,11 +25,16 @@ class Peserta extends MY_Controller
         $this->db->where('code', $code);
         $sertifikasi = $this->db->get('sertifikasi')->row();
 
+        if(empty($sertifikasi))
+        {
+          redirect('/');
+        }
+
         $crud = new grocery_CRUD();
 
         $state = $crud->getState();
 
-        if ($state == 'edit' || $state == 'add' || $state == 'insert' || $state == 'insert_validation' || $state == 'update' || $state == 'update_validation' || $state == 'ajax_relation' || $state == 'ajax_relation_n_n' || $state == 'delete_file') {
+        if ($state == 'edit' || $state == 'add' || $state == 'insert' || $state == 'insert_validation' || $state == 'update' || $state == 'update_validation' || $state == 'delete_multiple' || $state == 'ajax_relation' || $state == 'ajax_relation_n_n' || $state == 'delete_file') {
             $crud->set_table("biodata_guru");
         } else {
             $crud->set_table('view_peserta_lulus');
@@ -365,6 +370,94 @@ class Peserta extends MY_Controller
 
             redirect($path);
         }
+    }
+
+    public function import($code)
+    {
+      $this->db->where('code', $code);
+      $sertifikasi = $this->db->get('sertifikasi')->row();
+
+      $filename = 'import_peserta'.$code;
+      if(empty($sertifikasi))
+      {
+        redirect('/');
+      }
+
+      $this->load->model('import_model');
+
+      if(isset($_POST['import'])){
+          include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+
+          $excelreader = new PHPExcel_Reader_Excel2007();
+          $loadexcel = $excelreader->load('excel/'.$filename.'.xlsx'); // Load file yang telah diupload ke folder excel
+          $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
+
+          // Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database
+          $data = array();
+
+          $numrow = 1;
+
+          foreach ($sheet as $row) {
+            // code...
+            if ($numrow > 1) {
+                // get data from row
+                $data = array(
+                  'sertifikasi_id' => $sertifikasi->id,
+                  'nama_lengkap' => $row['A'],
+                  'tempat_lahir' => $row['B'],
+                  'tanggal_lahir' => date('Y-m-d',strtotime($row['C'])),
+                  'alamat_lengkap' => $row['D'],
+                  'no_hp' => $row['E'],
+                  'di_lembaga' => $row['F'],
+                  'status' => 'peserta',
+                  'agreement' => 1
+
+                );
+
+                // input to trainer table
+                $this->db->insert('biodata_guru', $data);
+
+                // notification IMPORT_PESERTA_SERTIFIKASI
+
+            }
+
+            $numrow++;
+          }
+
+          redirect('sertifikasi/peserta/daftar/'.$code);
+      }
+
+      elseif(isset($_POST['preview']))
+      {
+          $upload = $this->import_model->upload_file($filename);
+
+          if($upload['result'] == 'success')
+          {
+
+              include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+
+              $excelreader = new PHPExcel_Reader_Excel2007();
+              $loadexcel = $excelreader->load('excel/'.$filename.'.xlsx'); // Load file yang tadi diupload ke folder excel
+              $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
+
+              $data['sheet'] = $sheet;
+
+          } else {
+              $this->message->custom_error_msg('trainer/import/form','Error: Extensi file yang diijinkan hanya .xlsx cek file anda');
+          }
+
+      }
+
+      $this->layout->set_wrapper('import_form', $data, 'page', false);
+
+      $template_data["title"] = "Import Peserta Sertifikasi";
+      $template_data["crumb"] = [
+        "Sertifikasi" => "",
+        "Peserta" => ""
+      ];
+      $this->layout->auth();
+      $this->layout->render('admin', $template_data); // front - auth - admin
+
     }
 
 
