@@ -35,7 +35,7 @@
         $path[] = 'assets/css/a-design.css';
     ?>
     <?php $this->layout->set_assets($path, 'styles') ?>
-    <?php echo $this->layout->get_assets('styles') ?>    
+    <?php echo $this->layout->get_assets('styles') ?>
     <?php
         $baseJs = ['assets/plugins/jquery/dist/jquery.min.js'];
         if (isset($grocery_js)) {
@@ -60,7 +60,7 @@
 </head>
 <body class="hold-transition skin-<?php echo $this->config->item('skin') ?> fixed" style="position: unset;">
     <!-- Site wrapper -->
-    <div class="wrapper">  
+    <div class="wrapper">
         <header class="main-header">
             <a href="<?php echo site_url(); ?>" class="logo">
                 <span class="logo-mini"><b>U</b>F</span>
@@ -76,6 +76,26 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                      <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                          <i class="fa fa-bell-o"></i>
+                          <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li class="header">You have 10 notifications</li>
+                          <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                              <li>
+                                <a href="#">
+                                  <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                </a>
+                              </li>
+                            </ul>
+                          </li>
+                          <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                      </li>
                         <li class="dropdown user user-menu" >
                             <?php $user = $this->ion_auth->user()->row() ?>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -100,7 +120,7 @@
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                    <?php if($this->ion_auth->in_group('pengguna_ummi')):?> 
+                                    <?php if($this->ion_auth->in_group('pengguna_ummi')):?>
                                         <a href="<?php echo  site_url('pengguna/profile')?>" class="btn btn-default btn-flat"><?php echo lang('profile') ?></a>
                                     <?php else:?>
                                         <a href="<?php echo  site_url('myigniter/profile')?>" class="btn btn-default btn-flat"><?php echo lang('profile') ?></a>

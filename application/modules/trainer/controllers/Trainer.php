@@ -126,38 +126,6 @@ class Trainer extends MY_Controller
         $this->layout->render('admin', $template_data); // front - auth - admin
     }
 
-
-    public function import_trainer()
-    {
-        if(isset($_POST["submit"]))
-        {
-          $tmp = explode(".", $_FILES['import']['name']); // For getting Extension of selected file
-          $extension = end($tmp);
-          $allowed_extension = array("xls", "xlsx", "csv"); //allowed extension
-          if(in_array($extension, $allowed_extension)) //check selected file extension is present in allowed extension array
-            {
-                // $this->load->library('Data_importer');
-                // $file = $_FILES["import"]["tmp_name"]; // getting temporary source of excel file
-                // $this->data_importer->trainer_import_xls($file);
-                $this->message->custom_success_msg('trainer/import_trainer', 'Import File berhasil');
-            }else{
-                $this->message->custom_error_msg('trainer/import_trainer', 'Import File tidak berhasil');
-            }
-
-        }
-
-        $this->layout->set_wrapper('import_trainer', $data, 'page', false);
-
-        $template_data["title"] = "Trainer";
-        $template_data["crumb"] = [
-          "Trainer" => "",
-          "Import" => ""
-        ];
-        $this->layout->auth();
-        $this->layout->render('admin', $template_data); // front - auth - admin
-
-    }
-
     /**
      * Return form.
      *
